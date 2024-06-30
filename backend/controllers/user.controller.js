@@ -11,3 +11,19 @@ export const getUsersForSidebar = async (req, res) => {
         
     }
 };
+export const getUserInfo = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+            
+        }
+        res.status(200).json(user);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+        
+    }
+}

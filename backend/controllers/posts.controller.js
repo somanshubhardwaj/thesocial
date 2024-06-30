@@ -2,7 +2,7 @@ import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().select("-commentsList -likedBy -sharedBy -_v -updatedAt").populate("userId", "username profilePic fullName");
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
@@ -12,7 +12,7 @@ export const getPosts = async (req, res) => {
 export const postByFollowing = async (req, res) => {
   try {
     const userId = req.user._id;
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("-commentsList -likedBy -sharedBy -_v -updatedAt").populate("userId", "username profilePic fullName");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -27,7 +27,7 @@ export const postByFollowing = async (req, res) => {
 export const getPostByUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId });
+    const posts = await Post.find({ userId }).select("-commentsList -likedBy -sharedBy -_v -updatedAt").populate("userId", "username profilePic fullName");
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);
@@ -37,7 +37,7 @@ export const getPostByUser = async (req, res) => {
 export const getPostById = async (req, res) => {
   try {
     const { postId } = req.params;
-    const post = await Post.findById(postId);
+    const post = await Post.findById(postId).populate("userId", "username profilePic fullName");
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
