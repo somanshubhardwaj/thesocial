@@ -23,6 +23,31 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+  coverPicture: {
+    type: String,
+    default: "",
+  },
+  followers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  following: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
+  bio: {
+    type: String,
+    max: 50,
+  },
+  
 }, { timestamps: true });
 
 const User = mongoose.model("User", userSchema);
