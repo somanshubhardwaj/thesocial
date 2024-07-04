@@ -1,68 +1,11 @@
 import React from "react";
-
+import useUserFetch from "../hooks/useUserFetch";
 const Userlist = () => {
-  const users = [
-    {
-      id: 1,
-      fullName: "John Doe",
-      username: "john_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 2,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 3,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 4,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 5,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 6,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 7,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 8,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 9,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-    {
-      id: 10,
-      fullName: "Jane Doe",
-      username: "jane_doe",
-      avatar: "https://avatar.iran.liara.run/public/boy",
-    },
-  ];
+  const { users, loading } = useUserFetch();
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+  console.log(users);
 
   return (
     <div className="p-4">

@@ -1,6 +1,27 @@
+import { useState } from "react";
 import React from "react";
-
+import useSignup from "../hooks/useSignup";
+import { Link } from "react-router-dom";
 const Signup = () => {
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const[gender,setGender]=useState("");
+
+  const handleCheckboxChange=(gender)=> {
+    setGender(gender)
+  }
+  
+
+  const { signup } = useSignup();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ username, fullName, password, confirmPassword,gender });
+    signup({ username, fullName, password, confirmPassword,gender });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-w-96 mx-auto">
       <div className="w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0">
@@ -18,6 +39,8 @@ const Signup = () => {
             <input
               type="username"
               id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-2 bg-transparent text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
@@ -31,6 +54,8 @@ const Signup = () => {
             <input
               type="text"
               id="fullName"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               className="w-full px-4 py-2 text-gray-800 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
@@ -45,6 +70,8 @@ const Signup = () => {
             <input
               type="password"
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 text-gray-800 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
@@ -58,32 +85,31 @@ const Signup = () => {
             <input
               type="password"
               id="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               className="w-full px-4 py-2 text-gray-800 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
             />
           </div>
+          <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={gender} />
 
-          <div className="flex flex-col space-y-1">
-            <label
-              htmlFor="gender"
-              className="text-sm font-medium text-gray-800"
-            >
-              Gender
-            </label>
-            <select className="w-full px-4 py-2 text-gray-800 bg-transparent border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300">
-              <option value="male" className="text-gray-800">
-                Male
-              </option>
-              <option value="female" className="text-gray-800">
-                Female
-              </option>
-            </select>
-          </div>
+					<Link
+						to={"/login"}
+						className='text-sm hover:underline hover:text-blue-600 mt-2 inline-block'
+						href='#'
+					>
+						Already have an account?
+					</Link>
+          
+
+
+          
 
           <button
             type="submit"
             className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
+            onClick={handleSubmit}
           >
-            Login
+            Signup
           </button>
         </form>
       </div>
@@ -92,3 +118,42 @@ const Signup = () => {
 };
 
 export default Signup;
+
+
+
+
+
+
+
+
+
+const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
+	return (
+		<div className='flex'>
+			<div className='form-control'>
+				<label className={`label gap-2 cursor-pointer ${selectedGender === "male" ? "selected" : ""} `}>
+					<span className='label-text'>Male</span>
+					<input
+						type='checkbox'
+						className='checkbox border-slate-900'
+						checked={selectedGender === "male"}
+						onChange={() => onCheckboxChange("male")}
+					/>
+				</label>
+			</div>
+			<div className='form-control'>
+				<label className={`label gap-2 cursor-pointer  ${selectedGender === "female" ? "selected" : ""}`}>
+					<span className='label-text'>Female</span>
+					<input
+						type='checkbox'
+						className='checkbox border-slate-900'
+						checked={selectedGender === "female"}
+						onChange={() => onCheckboxChange("female")}
+					/>
+				</label>
+			</div>
+		</div>
+	);
+};
+
+
